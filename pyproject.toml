@@ -1,0 +1,29 @@
+[project]
+name = "spotify-client"
+version = "0.1"
+description = "wrapper api around spotify api"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Ismail Tlemcani" }]
+license = { text = "Apache-2.0" }
+classifiers = ["License :: OSI Approved :: Apache Software License"]
+dependencies = [
+    "python-dotenv", "six", "requests"
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.urls]
+Homepage = "https://github.com/Ismailtlem/spotify-client"
+Changelog = "https://github.com/Ismailtlem/spotify-client/releases"
+Issues = "https://github.com/Ismailtlem/spotify-client/issues"
+CI = "https://github.com/Ismailtlem/spotify-client/actions"
+
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.black]
+line-length = 90
