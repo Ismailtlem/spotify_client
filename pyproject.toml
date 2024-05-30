@@ -23,7 +23,7 @@ CI = "https://github.com/Ismailtlem/spotify-client/actions"
 
 
 [project.optional-dependencies]
-dev = ["pytest", "ruff"]
+dev = ["pytest", "ruff", "mypy"]
 
 [tool.ruff]
 line-length = 100
@@ -56,3 +56,6 @@ ignore=["D100", "D104", "D415"]
 
 [tool.ruff.lint.isort]
 lines-after-imports = 2
+
+[tool.mypy]
+strict = true

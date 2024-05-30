@@ -11,4 +11,4 @@ dist
 build
 .env
 .ruff_cache
-.vscode
+.vscode/
