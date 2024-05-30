@@ -23,7 +23,36 @@ CI = "https://github.com/Ismailtlem/spotify-client/actions"
 
 
 [project.optional-dependencies]
-test = ["pytest"]
+dev = ["pytest", "ruff"]
 
-[tool.black]
-line-length = 90
+[tool.ruff]
+line-length = 100
+
+exclude = [
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "venv",
+]
+
+[tool.ruff.lint]
+select = [
+    "B",  # flake8-bugbear
+    "F",  # pyflakes
+    "E",  # pycodestyle error
+    "I",  # isort
+    "W",  # pycodestyle warning
+    "RUF",    # Ruff-specific rules
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+    "D", # pycodestyle 
+]
+ignore=["D100", "D104", "D415"]
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2

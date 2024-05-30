@@ -10,11 +10,7 @@ class SpotifyPyClient(SpotifyClient):
     """
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
-        """
-        Initialize the class with your api_key and user_id and attach all of
-        the endpoints
-        """
-
+        """Initialize the class with your api_key and user_id and attach all of the endpoints."""
         super().__init__(*args, **kwargs)
 
         #         # API Root

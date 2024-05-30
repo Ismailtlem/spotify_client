@@ -2,19 +2,18 @@ import base64
 import webbrowser
 from urllib.parse import parse_qsl, urlparse
 
-import requests
 import six.moves.urllib.parse as urllibparse
 from dotenv import dotenv_values
 from requests import Session, exceptions
-from requests.auth import AuthBase
 
-from .exceptions import AuthenticationError, ResponseParseError
+from .exceptions import AuthenticationError
+
 
 config = dotenv_values(".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
 
 
 class SpotifyAuth:
-    """Spotify Base object for authentication"""
+    """Spotify Base object for authentication."""
 
     OAUTH_AUTHORIZE_URL = config.get("spotify_auth_url", "")
     TOKEN_URL = config.get("spotify_token_url", "https://accounts.spotify.com/api/token")
@@ -28,10 +27,6 @@ class SpotifyAuth:
         scope: str = "",
         show_dialog: bool = False,
     ) -> None:
-        """
-        Initialize the OAuth and save the access token
-
-        """
         self.session = session
         self.client_id = client_id
         self.client_secret = client_secret
@@ -39,11 +34,10 @@ class SpotifyAuth:
         self.scope = scope
         self.show_dialog = show_dialog
 
-        self._access_token = ""
+        self._access_token = ""  #
 
     def request_access_token(self, access_code: str = "") -> str:
         """Get client credentials access token"""
-
         auth_string = f"{config.get('client_id', '')}:{config.get('client_secret', '')}"
         base64_auth_string = base64.b64encode(auth_string.encode()).decode()
         self.session.headers.update({"Authorization": f"Basic {base64_auth_string}"})
@@ -57,7 +51,9 @@ class SpotifyAuth:
             if access_code:
                 payload["code"] = access_code
             try:
-                response = self.session.post(self.TOKEN_URL, data=payload, headers=self.session.headers)  # type: ignore
+                response = self.session.post(
+                    self.TOKEN_URL, data=payload, headers=self.session.headers
+                )  # type: ignore
                 response.raise_for_status()
                 return response.json().get("access_token")
 
@@ -69,7 +65,9 @@ class SpotifyAuth:
             payload = {"grant_type": "client_credentials"}
             # payload.update({"client_id": self.client_id, "client_secret": self.client_secret})
             try:
-                response = self.session.post(self.TOKEN_URL, data=payload, headers=self.session.headers)  # type: ignore
+                response = self.session.post(
+                    self.TOKEN_URL, data=payload, headers=self.session.headers
+                )  # type: ignore
                 response.raise_for_status()
                 self._access_token = response.json().get("access_token")
                 self.session.headers.update({"Authorization": f"Bearer {self._access_token}"})
@@ -80,7 +78,6 @@ class SpotifyAuth:
 
     def build_authorize_url(self) -> str:
         """Gets the URL to use to authorize this app"""
-
         payload = {
             "response_type": "code",
             "client_id": self.client_id,
@@ -97,8 +94,7 @@ class SpotifyAuth:
 
     @staticmethod
     def parse_auth_response_url(url: str) -> str:
-        """Parse the auth url to extract the code"""
-
+        """Parse the auth url to extract the code."""
         query_s = urlparse(url).query
         form = dict(parse_qsl(query_s))
 
@@ -109,8 +105,6 @@ class SpotifyAuth:
         return form.get("code", "")
 
     def get_auth_code(self) -> None | str:
-        """Open auth url to auth the current user"""
-
         auth_url = self.build_authorize_url()
         try:
             webbrowser.open(auth_url)

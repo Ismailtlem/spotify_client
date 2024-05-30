@@ -39,11 +39,9 @@ class AlbumsEntity(GenericEndpoint):
         return self.client.get("me/" + self.endpoint)
 
     def save_albums_for_current_user(self, album_ids: list[str]) -> None:
-
         albums = {"ids": album_ids}
         return self.client.put("me/" + self.endpoint, albums)
 
     def delete_user_saved_albums(self, album_ids: list[str]) -> None:
-
         albums = {"ids": album_ids}
         return self.client.delete("me/" + self.endpoint, albums)
