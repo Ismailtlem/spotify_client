@@ -1,23 +1,15 @@
 from typing import Any
 
-from spotify_client.generic_endpoint import GenericEndpoint
+# from spotify_client.base_client import BaseClient
+# from spotify_client.client import SpotifyClient
+# clfrom spotify_client.helpers import build_path
+from .generic_endpoint import GenericSpotifyEndpoint
 
 
-class MarketsEntity(GenericEndpoint):
-    """
-    Actions for the Markets endpoint.
-    """
+class MarketsEntity(GenericSpotifyEndpoint):
+    """Actions for the Albums endpoint."""
 
-    def __init__(self, client, *args, **kwargs):
-        """
-        Initialize the endpoint
-        """
-        super().__init__(client)
+    def __init__(self, client: Any, **kwargs: Any) -> None:
+        """Initialize the endpoint."""
         self.client = client
-        self.endpoint = "markets"
-        # self.workflow_id = None
-
-    def all(self) -> None:
-        """Get all elements"""
-
-        return self.client.get(self.build_path())
+        super().__init__(client=self.client, endpoint="markets", **kwargs)

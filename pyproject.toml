@@ -7,9 +7,7 @@ requires-python = ">=3.10"
 authors = [{ name = "Ismail Tlemcani" }]
 license = { text = "Apache-2.0" }
 classifiers = ["License :: OSI Approved :: Apache Software License"]
-dependencies = [
-    "python-dotenv", "six", "requests"
-]
+dynamic = ["dependencies", "optional-dependencies"]
 
 [build-system]
 requires = ["setuptools"]
@@ -22,8 +20,9 @@ Issues = "https://github.com/Ismailtlem/spotify-client/issues"
 CI = "https://github.com/Ismailtlem/spotify-client/actions"
 
 
-[project.optional-dependencies]
-dev = ["pytest", "ruff", "mypy"]
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements/requirements.txt"]}
+optional-dependencies.dev = {file = ["requirements/requirements-dev,txt"]}
 
 [tool.ruff]
 line-length = 100

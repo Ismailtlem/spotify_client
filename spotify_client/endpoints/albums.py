@@ -1,47 +1,23 @@
 from typing import Any
 
-from spotify_client.generic_endpoint import GenericEndpoint
+# from spotify_client.base_client import BaseClient
+# from spotify_client.client import SpotifyClient
+# clfrom spotify_client.helpers import build_path
+from .generic_endpoint import GenericSpotifyEndpoint
 
 
-class AlbumsEntity(GenericEndpoint):
-    """
-    Actions for the Albums endpoint.
-    """
+class AlbumsEntity(GenericSpotifyEndpoint):
+    """Actions for the Albums endpoint."""
 
-    def __init__(self, client, *args, **kwargs):
-        """
-        Initialize the endpoint
-        """
-        super().__init__(client, *args, **kwargs)
+    def __init__(self, client: Any, **kwargs: Any) -> None:
+        """Initialize the endpoint."""
         self.client = client
-        self.endpoint = "albums"
-        # self.workflow_id = None
+        super().__init__(client=self.client, endpoint="albums", **kwargs)
 
-    def get_by_id(self, entity_id: str) -> None:
-        """Get an album"""
-
-        return self.client.get(self.build_path(entity_id))
-
-    def get_by_ids(self, entity_ids: str) -> None:
-        """Get many albums"""
-
-        return self.client.get_by_ids(self.build_path(self.endpoint), entity_ids)
-
-    def get_entity_object(self, entity_id: str, entity_object: str) -> None:
-        """Get an album object"""
-
-        # print(self.build_path(entity_id, entity_object))
-        return self.client.get(self.build_path(entity_id, entity_object))
-
-    def get_user_saved_albums(self) -> None:
-        """Get an album object"""
-
-        return self.client.get("me/" + self.endpoint)
-
-    def save_albums_for_current_user(self, album_ids: list[str]) -> None:
-        albums = {"ids": album_ids}
-        return self.client.put("me/" + self.endpoint, albums)
-
-    def delete_user_saved_albums(self, album_ids: list[str]) -> None:
-        albums = {"ids": album_ids}
-        return self.client.delete("me/" + self.endpoint, albums)
+    def get_new_releases(self, query_params: Any = None):
+        """Get a list of new album releases featured in Spotify."""
+        return self.client.get(
+            "browse/new-releases",
+            headers=self.client.connection.headers,
+            query_params=query_params,
+        )

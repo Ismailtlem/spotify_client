@@ -4,6 +4,10 @@ class APIClientError(Exception):
     All other exceptions *must* inherit from this."""
 
 
+class CustomError(APIClientError):
+    """Some error happened while trying to connect to the API"""
+
+
 class AuthenticationError(APIClientError):
     """Something went wrong when trying to auth to the API"""
 

@@ -1,28 +1,15 @@
 from typing import Any
 
-from spotify_client.generic_endpoint import GenericEndpoint
+# from spotify_client.base_client import BaseClient
+# from spotify_client.client import SpotifyClient
+# clfrom spotify_client.helpers import build_path
+from .generic_endpoint import GenericSpotifyEndpoint
 
 
-class PlaylistsEntity(GenericEndpoint):
-    """
-    Actions for the Playlists endpoint.
-    """
+class PlaylistsEntity(GenericSpotifyEndpoint):
+    """Actions for the Albums endpoint."""
 
-    def __init__(self, client, *args, **kwargs):
-        """
-        Initialize the endpoint
-        """
-        super().__init__(client)
+    def __init__(self, client: Any, **kwargs: Any) -> None:
+        """Initialize the endpoint."""
         self.client = client
-        self.endpoint = "playlists"
-        # self.workflow_id = None
-
-    def get_by_id(self, entity_id: str) -> None:
-        """Get a playlist"""
-
-        return self.client.get(self.build_path(entity_id))
-
-    def get_by_ids(self, entity_ids: str) -> None:
-        """Get many playlists"""
-
-        return self.client.get_by_ids(self.build_path(self.endpoint), entity_ids)
+        super().__init__(client=self.client, endpoint="playlists", **kwargs)
