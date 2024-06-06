@@ -1,8 +1,5 @@
 from typing import Any
 
-# from shows.base_client import BaseClient
-# from spotify_client.client import SpotifyClient
-# clfrom spotify_client.helpers import build_path
 from .generic_endpoint import GenericSpotifyEndpoint
 
 

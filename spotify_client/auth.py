@@ -1,8 +1,7 @@
 import base64
+import urllib.parse as urllibparse
 import webbrowser
-from urllib.parse import parse_qsl, urlparse
 
-import six.moves.urllib.parse as urllibparse
 from dotenv import dotenv_values
 from requests import Session, exceptions
 
@@ -11,13 +10,13 @@ from spotify_client.helpers import parse_auth_response_url
 from .exceptions import AuthenticationError
 
 
-config = dotenv_values(".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
+config = dotenv_values(".env")
 
 
 class SpotifyAuth:
     """Spotify Base object for authentication."""
 
-    OAUTH_AUTHORIZE_URL = config.get("spotify_auth_url", "")
+    OAUTH_AUTHORIZE_URL = config.get("spotify_auth_url", "https://accounts.spotify.com/authorize")
     TOKEN_URL = config.get("spotify_token_url", "https://accounts.spotify.com/api/token")
 
     def __init__(
@@ -74,8 +73,8 @@ class SpotifyAuth:
         except exceptions.RequestException as e:
             raise AuthenticationError(f"Could not get the token {e}")
 
-    def build_authorize_url(self) -> str:
-        """Gets the URL to use to authorize this app"""
+    def _build_authorize_url(self) -> str:
+        """Get the URL to use to authorize this app."""
         payload = {
             "response_type": "code",
             "client_id": self.client_id,
@@ -90,21 +89,10 @@ class SpotifyAuth:
 
         return "%s?%s" % (self.OAUTH_AUTHORIZE_URL, urlparams)
 
-    # @staticmethod
-    # def parse_auth_response_url(url: str) -> str:
-    #     """Parse the auth url to extract the code."""
-    #     query_s = urlparse(url).query
-    #     form = dict(parse_qsl(query_s))
-
-    #     if "error" in form:
-    #         raise AuthenticationError(
-    #             "Received error from auth server: " "{}".format(form["error"]), error=form["error"]
-    #         )
-    #     return form.get("code", "")
-
-    def get_auth_code(self) -> None | str:
+    @property
+    def auth_code(self) -> None | str:
         """Get the authorization code to access user data."""
-        auth_url = self.build_authorize_url()
+        auth_url = self._build_authorize_url()
         try:
             webbrowser.open(auth_url)
             print("Opened %s in your browser", auth_url)
@@ -112,5 +100,3 @@ class SpotifyAuth:
             return parse_auth_response_url(redirect_url)
         except webbrowser.Error:
             print("Please navigate here: %s", auth_url)
-
-    # the url is https://accounts.spotify.com/authorize?client_id=60a09940b21c4eb680eb27104c98abb7&response_type=code&redirect_uri=https://localhost:3000/redirect_uri&scope=user-read-private user-read-email

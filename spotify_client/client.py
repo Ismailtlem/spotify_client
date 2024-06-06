@@ -72,7 +72,7 @@ class SpotifyClient(BaseClient):
             spotify_auth = SpotifyAuth(
                 self.connection, self.scope, self.client_id, self.client_secret, self.redirect_uri
             )
-            self.access_code = spotify_auth.get_auth_code()
+            self.access_code = spotify_auth.auth_code
             self._access_token = spotify_auth.request_user_access_token(self.access_code)
         self.connection.headers.update({"Authorization": f"Bearer {self._access_token}"})
 

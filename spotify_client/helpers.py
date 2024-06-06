@@ -12,7 +12,7 @@ RETRY_COUNT = 5
 
 
 class RetryAdapter(HTTPAdapter):
-    """Retry adapter"""
+    """Retry adapter."""
 
     def __init__(self, *args, **kwargs) -> None:
         super(RetryAdapter, self).__init__(*args, **kwargs)

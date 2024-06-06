@@ -1,10 +1,9 @@
-from itertools import chain
 from typing import Any, ClassVar
 from urllib import parse as urlparse
 
 from requests import Request, Session, codes, exceptions, utils
 
-from spotify_client.helpers import RetryAdapter, build_path
+from spotify_client.helpers import RetryAdapter
 
 from .exceptions import AuthenticationError, ResponseParseError
 
@@ -86,6 +85,12 @@ class BaseClient(object):
             endpoint=endpoint, method="GET", headers=headers, query_params=query_params, body=body
         )
 
+    def post(self, endpoint: str, headers: Any, query_params: Any = None, body: Any = None) -> None:
+        """Make a Post request."""
+        return self.make_request(
+            endpoint=endpoint, method="POST", headers=headers, query_params=query_params, body=body
+        )
+
     def put(self, endpoint: str, headers: Any, query_params: Any = None, body: Any = None) -> None:
         """Make a put request an url."""
         return self.make_request(
@@ -95,7 +100,7 @@ class BaseClient(object):
     def delete(
         self, endpoint: str, headers: Any, query_params: Any = None, body: Any = None
     ) -> None:
-        """Get an url."""
+        """Make a delete request to the url."""
         return self.make_request(
             endpoint=endpoint,
             method="DELETE",
