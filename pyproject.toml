@@ -22,7 +22,7 @@ CI = "https://github.com/Ismailtlem/spotify-client/actions"
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements/requirements.txt"]}
-optional-dependencies.dev = {file = ["requirements/requirements-dev,txt"]}
+optional-dependencies.dev = {file = ["requirements/requirements-dev.txt"]}
 
 [tool.ruff]
 line-length = 100
