@@ -48,6 +48,7 @@ class BaseClient(object):
         #     # Log response immediately upon return
 
         #     # Handle all response codes as elegantly as needed in a single spot
+        print("reees", res.status_code)
         if res.status_code == codes.ok:
             print("requuuest successful")
             if method == "GET":
@@ -56,8 +57,15 @@ class BaseClient(object):
                     return resp_json
                 except exceptions.JSONDecodeError as e:
                     raise ResponseParseError(f"Error raised by the API: {e}.\nResponse: {res.text}")
+        if res.status_code == codes.created:
+            if method == "POST":
+                try:
+                    resp_json = res.json()
+                    return resp_json
+                except exceptions.JSONDecodeError as e:
+                    raise ResponseParseError(f"Error raised by the API: {e}.\nResponse: {res.text}")
 
-        elif res.status_code == codes.bad_request or codes.unauthorized:
+        if res.status_code == codes.bad_request or codes.unauthorized:
             try:
                 resp_json = res.json()
                 print("Details: " + str(resp_json))
