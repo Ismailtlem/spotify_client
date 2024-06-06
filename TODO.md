@@ -1,4 +1,9 @@
 # add authentication with user
 
-- finish album endpoint
-- Make an interface so that all entities implements that interface
+- Add tests
+- Add rate limite
+- Add logging
+
+Remaining endpoints to test
+
+- Everything from Playlists : from get featured playlists endpoint

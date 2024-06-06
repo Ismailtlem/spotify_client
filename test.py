@@ -21,9 +21,15 @@ class SpotifyTestClient(SpotifyClient):
 
 if __name__ == "__main__":
     spotify_py_client = SpotifyTestClient(
-        scope="user-library-read",
+        scope="playlist-modify-public, playlist-modify-private",
         client_id="60a09940b21c4eb680eb27104c98abb7",
         client_secret="72756de6e43f48109d98f0fd648c561f",
         redirect_uri="https://localhost:3000/callback",
     )
-    print(spotify_py_client.artists.get_entity_feature("2aZPgvcYQD2z4NIoO8x8Gi", "related-artists"))
+    print(
+        spotify_py_client.playlists.create(
+            user_id="31pymh5uckv76lgngxguuqm35ftm",
+            name="my-thiasasaard-qweqweqplaylist",
+            description="descasasa",
+        )
+    )
