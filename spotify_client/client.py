@@ -1,8 +1,7 @@
-"""
-Main Spotify API Client
-"""
+"""Main Spotify API Client."""
 
 import base64
+import logging
 from typing import Any
 from urllib import parse as urlparse
 
@@ -35,6 +34,23 @@ from .endpoints import (
 from .exceptions import AuthenticationError, ResponseParseError
 
 
+# create logger
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
+# create console handler and set level to debug
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+
+# create formatter
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+
+# add formatter to ch
+ch.setFormatter(formatter)
+
+# add ch to logger
+logger.addHandler(ch)
+
 config = dotenv_values(".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
 
 
@@ -59,7 +75,7 @@ class SpotifyClient(BaseClient):
         self.access_code = ""
         self.scope = scope
         self.redirect_uri = redirect_uri
-        print(self.is_calling_user_data)
+        # print(self.is_calling_user_data)
         if not (self.scope and self.redirect_uri):
             spotify_auth = SpotifyAuth(
                 self.connection,
@@ -68,7 +84,7 @@ class SpotifyClient(BaseClient):
             )
             self._access_token = spotify_auth.request_general_token()
         else:
-            print("insiiiiide user data")
+            # print("insiiiiide user data")
             spotify_auth = SpotifyAuth(
                 self.connection, self.scope, self.client_id, self.client_secret, self.redirect_uri
             )
