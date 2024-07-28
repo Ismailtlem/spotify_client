@@ -14,10 +14,6 @@ Install this library using `pip`:
 pip install spotify-client
 ```
 
-## Usage
-
-Usage instructions go here.
-
 ## Development
 
 To contribute to this library, first checkout the code. Then create a new virtual environment:
@@ -32,6 +28,12 @@ Now install the dependencies and test dependencies:
 
 ```bash
 pip install -e '.[test]'
+```
+
+Create a new .env file following the structure of the file sample.env
+
+```bash
+cp sample.env .env
 ```
 
 To run the tests (No tests yet ...)
