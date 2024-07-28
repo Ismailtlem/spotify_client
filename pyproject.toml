@@ -1,7 +1,7 @@
 [project]
 name = "spotify-client"
 version = "0.1"
-description = "wrapper api around spotify api"
+description = "Python wrapper around spotify api"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{ name = "Ismail Tlemcani" }]
