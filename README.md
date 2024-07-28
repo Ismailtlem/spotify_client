@@ -44,6 +44,8 @@ print(spotify_py_client.albums.get_by_id("4aawyAB9vmqN3uQ7FjRGTy"))
 
 The available endpoints are in `spotify_client/endpoints`.
 
+## Testing
+
 To run the tests (No tests yet ...)
 
 ```bash
