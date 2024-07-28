@@ -1,22 +1,13 @@
 """Main Spotify API Client."""
 
-import base64
 import logging
-from typing import Any
-from urllib import parse as urlparse
 
 # from dotenv import load_dotenv
 from dotenv import dotenv_values
-from requests import Request, Session, codes, exceptions, utils
 
 from spotify_client.auth import SpotifyAuth
 
-# logger = logging.getLogger("example.exampleClient")
-from spotify_client.helpers import RetryAdapter, build_path
-
 from .base_client import BaseClient
-
-# from requests import codes as http_status
 from .endpoints import (
     AlbumsEntity,
     ArtistsEntity,
@@ -31,7 +22,6 @@ from .endpoints import (
     TracksEntity,
     UsersEntity,
 )
-from .exceptions import AuthenticationError, ResponseParseError
 
 
 # create logger
@@ -68,14 +58,13 @@ class SpotifyClient(BaseClient):
         client_secret: str = "",
         redirect_uri: str = "",
     ) -> None:
-        super().__init__(base_url=self.BASE_URL)  # Call the BaseClient's __init__ method
+        super().__init__(base_url=self.BASE_URL)
         self.client_id = client_id
         self.client_secret = client_secret
         self._access_token = ""
         self.access_code = ""
         self.scope = scope
         self.redirect_uri = redirect_uri
-        # print(self.is_calling_user_data)
         if not (self.scope and self.redirect_uri):
             spotify_auth = SpotifyAuth(
                 self.connection,
@@ -84,7 +73,6 @@ class SpotifyClient(BaseClient):
             )
             self._access_token = spotify_auth.request_general_token()
         else:
-            # print("insiiiiide user data")
             spotify_auth = SpotifyAuth(
                 self.connection, self.scope, self.client_id, self.client_secret, self.redirect_uri
             )
@@ -108,12 +96,5 @@ class SpotifyClient(BaseClient):
     @property
     def is_calling_user_data(self) -> bool:
         """Return true if the user data should be called."""
-        # if self.scope or self.redirect_uri:
-        #     return False
-        # if self.scope and self.redirect_uri:
-        #     return True
         return True if self.redirect_uri and self.scope else False
 
-    #     # TODO handle rate limiting gracefully
-    # if scope==True or redirect uri==True
-    # returns false

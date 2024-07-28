@@ -66,10 +66,8 @@ class SpotifyAuth:
         try:
             response = self.session.post(self.TOKEN_URL, data=payload, headers=self.session.headers)  # type: ignore
             response.raise_for_status()
-            print("eeeend access token 1", response.json().get("access_token"))
             return response.json().get("access_token")
 
-            # return response.json()
         except exceptions.RequestException as e:
             raise AuthenticationError(f"Could not get the token {e}")
 
