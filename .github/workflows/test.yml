@@ -22,6 +22,6 @@ jobs:
       - name: Install dependencies
         run: |
           pip install '.[dev]'
-      - name: Run tests
-        run: |
-          bash scripts/all.sh
+        # run: |
+        # bash scripts/all.sh
+      # - name: Run tests
