@@ -12,9 +12,9 @@ packaging==24.0
     # via pytest
 pluggy==1.5.0
     # via pytest
-pytest==8.2.1
-    # via -r requirements/requirements-dev.in
+pytest==8.3.2
+    # via -r requirements-dev.in
 ruff==0.4.7
-    # via -r requirements/requirements-dev.in
+    # via -r requirements-dev.in
 tomli==2.0.1
     # via pytest
