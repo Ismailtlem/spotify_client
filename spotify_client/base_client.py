@@ -42,12 +42,7 @@ class BaseClient(object):
         )
         prepped = self.connection.prepare_request(req)
         res = self.connection.send(prepped)
-        #     # Log response immediately upon return
-
-        #     # Handle all response codes as elegantly as needed in a single spot
-        # print("reees", res.status_code)
         if res.status_code == codes.ok:
-            # print("requuuest successful")
             if method == "GET":
                 try:
                     resp_json = res.json()
@@ -65,7 +60,6 @@ class BaseClient(object):
         if res.status_code == codes.bad_request or codes.unauthorized:
             try:
                 resp_json = res.json()
-                # print("Details: " + str(resp_json))
                 raise AuthenticationError(resp_json)
 
             except exceptions.JSONDecodeError as e:
