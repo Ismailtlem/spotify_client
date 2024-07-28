@@ -20,7 +20,10 @@ class BaseClient(object):
         """Init the class."""
         self.base_url = base_url
         self.connection = Session()
-        self.connection.mount("https", RetryAdapter())
+        retry_adapter = RetryAdapter()
+        self.connection.mount("http://", retry_adapter)
+        self.connection.mount("https://", retry_adapter)
+
         self.connection.headers = self.default_headers
         parsed_url = urlparse.urlparse(self.base_url)
         if parsed_url.scheme not in ["http", "https"]:
@@ -30,12 +33,6 @@ class BaseClient(object):
         self, endpoint: str, method: str, headers: Any, query_params: Any, body: Any
     ) -> None:
         """Make a request to the endpoint."""
-        print(
-            "enddpoint",
-            self.base_url + endpoint,
-        )
-        print("queeery paaraaams", query_params)
-        print("booody", body)
         req = Request(
             method=method,
             url=self.base_url + endpoint,
@@ -48,9 +45,9 @@ class BaseClient(object):
         #     # Log response immediately upon return
 
         #     # Handle all response codes as elegantly as needed in a single spot
-        print("reees", res.status_code)
+        # print("reees", res.status_code)
         if res.status_code == codes.ok:
-            print("requuuest successful")
+            # print("requuuest successful")
             if method == "GET":
                 try:
                     resp_json = res.json()
@@ -68,7 +65,7 @@ class BaseClient(object):
         if res.status_code == codes.bad_request or codes.unauthorized:
             try:
                 resp_json = res.json()
-                print("Details: " + str(resp_json))
+                # print("Details: " + str(resp_json))
                 raise AuthenticationError(resp_json)
 
             except exceptions.JSONDecodeError as e:
