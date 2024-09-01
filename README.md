@@ -19,7 +19,7 @@ source venv/bin/activate
 Now install the dependencies and test dependencies:
 
 ```bash
-pip install requirements/requirements.txt requirements-dev.txt
+pip install -r requirements/requirements.txt -r requirements/requirements-dev.txt
 ```
 
 Create a new .env file following the structure of the file sample.env
